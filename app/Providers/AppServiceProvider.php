@@ -19,6 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Blade::component('admin.aside', aside::class);
     }
 }
