@@ -43,6 +43,8 @@ class aside extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.admin.aside');
+        return view('components.admin.aside', [
+            'routes' => $this->routes,
+        ]);
     }
 }
