@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -13,6 +15,14 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
         $middleware->append(\App\Http\Middleware\CheckPostSize::class);
+        $middleware->trustProxies(
+            '*',
+            Request::HEADER_X_FOWARDED_FOR |
+                Request::HEADER_X_FOWARDED_HOST |
+                Request::HEADER_X_FOWARDED_PORT |
+                Request::HEADER_X_FOWARDED_PROTO
+
+        );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
